@@ -5,4 +5,9 @@ const getData = async () => {
     return raw.data
 }
 
-export { getData }
+const getDataWithPage = async (page) => {
+    let raw = await axios.get('https://api.thecatapi.com/v1/breeds?limit=10&page='+page)
+    return raw.data
+}
+
+export { getData, getDataWithPage }
