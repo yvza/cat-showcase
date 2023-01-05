@@ -11,14 +11,21 @@ const HeaderWrap = styled.section`
     padding: 0 20px;
 `
 
-export default function Header({stateChanger}){
+export default function Header({stateChanger, triggerGetData, loaderControl}){
     const [inputText, setInputText] = useState('')
 
     const enterHandler = async (event) => {
-        const finder = await searchFromUser(inputText)
-
         if (event.key === 'Enter') {
-            stateChanger([...finder])
+            stateChanger([])
+            loaderControl(true)
+
+            if (inputText !== '') {
+                const finder = await searchFromUser(inputText)
+                loaderControl(false)
+                stateChanger([...finder])
+            } else {
+                triggerGetData()
+            }
         }
     }
     
