@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 Wrapper = styled.section`
     width: 600px;
-    height: 1000px;
     background: #fff;
     margin: 0 auto;
 `
