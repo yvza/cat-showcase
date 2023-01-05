@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { searchFromUser } from '../utils/get.jsx'
 
 const HeaderWrap = styled.section`
     overflow: auto;
@@ -13,8 +14,8 @@ const HeaderWrap = styled.section`
 export default function Header({stateChanger, catList}){
     const [inputText, setInputText] = useState('')
 
-    const enterHandler = (event) => {
-        const finder = catList.filter(entry => Object.values(entry).some(val => typeof val === "string" && val.includes(inputText)))
+    const enterHandler = async (event) => {
+        const finder = await searchFromUser(inputText)
 
         if (event.key === 'Enter') {
             stateChanger([...finder])
