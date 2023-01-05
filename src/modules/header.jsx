@@ -11,7 +11,7 @@ const HeaderWrap = styled.section`
     padding: 0 20px;
 `
 
-export default function Header({stateChanger, catList}){
+export default function Header({stateChanger}){
     const [inputText, setInputText] = useState('')
 
     const enterHandler = async (event) => {
