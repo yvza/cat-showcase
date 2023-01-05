@@ -52,7 +52,7 @@ function App() {
   
   return (
     <Wrapper>
-      <Header stateChanger={setCatList} catList={catList}/>
+      <Header stateChanger={setCatList}/>
       {catList.length > 0 && <Content catData={catList}/>}
       {page < 7 && <Loader status={loader}/>}
     </Wrapper>
