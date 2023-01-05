@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getData } from './utils/get.jsx'
+import { getData, getDataWithPage } from './utils/get.jsx'
 
 import Wrapper from './modules/wrapper.jsx'
 import Header from './modules/header.jsx'
@@ -9,6 +9,11 @@ import Loader from './modules/loader.jsx'
 function App() {
   const [loader, setLoader] = useState(false)
   const [catList, setCatList] = useState([])
+  const [page, setPage] = useState(1)
+
+  const incrementPage = () => {
+    setPage(page + 1)
+  }
 
   const get = async () => {
     setLoader(true)
@@ -17,18 +22,39 @@ function App() {
     setLoader(false)
   }
 
+  const getWithPage = async () => {
+    if (page > 6) {
+      return
+    }
+    setLoader(true)
+    incrementPage()
+    let nextPageData = await getDataWithPage(page)
+    setCatList(old => [...old, ...nextPageData])
+    setLoader(false)
+  }
+
   useEffect(() => {
     get()
-  
     return () => {}
   }, [])
-  
 
+  useEffect(() => {
+    const detectUserOnBottom = function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        getWithPage()
+      }
+    }
+    window.addEventListener('scroll', detectUserOnBottom)
+    return () => {
+      window.removeEventListener('scroll', detectUserOnBottom)
+    }
+  }, [page])
+  
   return (
     <Wrapper>
       <Header/>
       {catList.length > 0 && <Content catData={catList}/>}
-      <Loader status={loader}/>
+      {page < 7 && <Loader status={loader}/>}
     </Wrapper>
   )
 }
