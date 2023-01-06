@@ -8,16 +8,9 @@ const Item = styled.section`
 const CollapseItemWrapper = ({ children }) => {
     const [show, setShow] = useState(false)
 
-    useEffect(() => {
-      console.log(show)
-    
-      return () => {}
-    }, [show])
-    
-
     return (
         <>
-            <i className="bi bi-caret-down-square" onClick={() => setShow((show) => !show)}></i>
+            <i className={"bi " + (show ? 'bi-caret-up-square' : 'bi-caret-down-square')} onClick={() => setShow((show) => !show)}></i>
             {show && children}
         </>
     )
